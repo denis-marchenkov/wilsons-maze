@@ -13,7 +13,7 @@ class wilson_print():
     def print_steps(self,  sleep: float):
         self.__cls()
         for path in self.w.all_paths:
-            display_grid = [[' ' for c in range(self.w.rows)] for r in range(self.w.columns)]
+            display_grid = self.__grid()
             sy,sx,_ = path[0]
             ey, ex,_ = path[-1]
             display_grid[sy][sx] = "S"
@@ -42,7 +42,7 @@ class wilson_print():
             if i>top:
                 break
             print(f'\n{i} path: {path}\n')
-            display_grid = [[' ' for c in range(self.w.rows)] for r in range(self.w.columns)]
+            display_grid = self.__grid()
             sy,sx,_ = path[0]
             ey, ex,_ = path[-1]
             display_grid[sy][sx] = "S"
@@ -68,5 +68,8 @@ class wilson_print():
     def __print_grid(self, grid):
         for row in grid:
             print(row)
+
+    def __grid(self):
+        return [[' ' for c in range(self.w.columns)] for r in range(self.w.rows)]
 
 

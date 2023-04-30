@@ -13,7 +13,7 @@
 # and removing one of the cell 'walls' towards which direction is pointing
 class wilsons():
 
-    def __init__(self, randomizer, seed=  None, rows = 4, columns = 4):
+    def __init__(self, randomizer, seed = None, rows = 4, columns = 4):
 
         self.rows = rows
         self.columns = columns
@@ -33,7 +33,8 @@ class wilsons():
         self.directions = [self.top, self.right, self.bottom, self.left]
         self.reverse_direction = {self.top:self.bottom, self.bottom:self.top, self.left:self.right, self.right:self.left}
 
-        # record every step of the scouting process (for future visualization mostly, otherwise it's unnecesary)
+        # record every step of the scouting process,
+        # for future visualization mostly, otherwise it's unnecessary
         self.all_paths = []
 
         # record the actual paths from start to finish
@@ -160,31 +161,28 @@ class wilsons():
                         unvisited_cells.append((y, x))
 
             u_len = len(unvisited_cells)
+
             # all visited, we're done
-            if u_len ==0:
+            if u_len == 0:
                 break
-            
-            # reshuffle starting coordinates and directions
-            # if they are not in grid
-            while True:
 
-                start = unvisited_cells[self.random.randint(0, u_len-1)]
-                self.random.shuffle(unvisited_cells)
-                finish = unvisited_cells[self.random.randint(0, u_len-1)]
+            s = self.random.randint(0, u_len-1)
+            self.random.shuffle(unvisited_cells)
+            f = self.random.randint(0, u_len-1)
 
-                if set_entrance:
-                    start = entrance
-                    finish = exit
+            start = unvisited_cells[s]
+            finish = unvisited_cells[f]
 
-                self.random.shuffle(dirs)
-                dir = dirs[0]
-                current = self.add_direction(start, dir)
+            if set_entrance:
+                start = entrance
+                finish = exit
 
-                # reshuffle
-                if not self.in_grid(current):
-                    continue
-
-                break
+            dir = None
+            # if we about to walk outside of the grid - change direction
+            for d in dirs:
+                if self.in_grid(self.add_direction(start, d)):
+                    dir = d
+                    break
 
             set_entrance = False
 
