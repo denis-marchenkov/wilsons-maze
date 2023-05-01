@@ -1,13 +1,22 @@
 # region imports
 from wilsons_generator import wilsons
 from print_wilson import wilson_print
+from draw_wilson import maze
 import random
 # endregion
 
-w = wilsons(randomizer = random, rows = 10, columns = 10)
+rows = cols = 20
+cell_size = 20
+clock_tick = 24
 
-w.traverse_grid(entrance = (0,0), exit = (w.rows-1, w.columns-1))
+w = wilsons(randomizer = random, seed = 327111667, rows = rows, columns = cols)
+
+w.traverse_grid((0,0),(w.rows - 1, w.columns - 1))
 
 mv = wilson_print(w)
-# mv.print_steps(sleep=0.3)
-mv.dump_carve_paths(top=10)
+# #mv.print_steps(sleep=0.3)
+# mv.dump_paths(top=1, type=0)
+mv.dump_paths(top=1, type=1)
+
+m = maze(w, cell_size = cell_size)
+m.carve(clock_tick=clock_tick)

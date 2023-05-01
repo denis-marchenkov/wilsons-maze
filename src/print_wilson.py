@@ -36,10 +36,12 @@ class wilson_print():
                 time.sleep(sleep)
 
 
-    def dump_carve_paths(self, top=10):
-        self.__cls()
-        for i, path in enumerate(self.w.paths_to_carve):
-            if i>top:
+    def dump_paths(self,type=0, top=10, clear: bool = False):
+        if clear:
+            self.__cls()
+        paths = self.w.all_paths if type==0 else self.w.paths_to_carve
+        for i, path in enumerate(paths):
+            if i>=top:
                 break
             print(f'\n{i} path: {path}\n')
             display_grid = self.__grid()
