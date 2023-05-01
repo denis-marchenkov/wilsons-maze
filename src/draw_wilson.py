@@ -98,56 +98,85 @@ class maze():
 
         pygame.display.set_caption('Wilsons Walk - Carving')
 
-        paths = self._flatten_wilsons_grid(self.w.paths_to_carve)
-
-        i=0
-
         running = True
+        carved = False
 
         while running:
-
-            if i >= len(paths):
-                continue
 
             self.__background()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+            self.__display_grid()
 
-            self.display_grid()
+            if not carved:
+                for p in self.w.paths_to_carve:
+                    
+                    for i, cell in enumerate(p):
+                        self.__display_grid()
 
-            # grab wilsons coordinates;
-            # get cell from drawing grid;
-            # change state of drawing cell
-            c = paths[i]
-            current = self.__get_grid_cell((c[0],c[1]))
-            current.direction = c[2]
-            current.carved = True
-            current.draw()
+                        # grab wilsons coordinates;
+                        # get cell from drawing grid;
+                        # change state of drawing cell
+                        c = cell
+                        current = self.__get_grid_cell((c[0],c[1]))
+                        current.direction = c[2]
+                        current.carved = True
+                        current.draw()
 
-            if i+1 >= len(paths):
-                n = c
-            else:
-                n = paths[i+1]
+                        if i+1 >= len(p):
+                            n = p[-1]
+                        else:
+                            n = p[i+1]
 
-            # also need next cell to remove walls between current and next
-            next = self.__get_grid_cell((n[0],n[1]))
-            next.direction = n[2]
-            self.__break_wall(current,next)
+                        # also need next cell to remove walls between current and next
+                        next = self.__get_grid_cell((n[0],n[1]))
+                        next.direction = n[2]
+                        self.__break_wall(current,next)
 
-            i+=1
+                        pygame.display.flip()
+                        if clock_tick != None:
+                            clock.tick(clock_tick)
+                carved = True
+        pygame.quit()
 
+
+    # draw the entire carved maze at once
+    def instant_carve(self):
+        for p in self.w.paths_to_carve:
+                for i, cell in enumerate(p):
+                    c = cell
+                    current = self.__get_grid_cell((c[0],c[1]))
+                    current.direction = c[2]
+                    current.carved = True
+                    current.draw()
+
+                    if i+1 >= len(p):
+                        n = p[-1]
+                    else:
+                        n = p[i+1]
+
+                    next = self.__get_grid_cell((n[0],n[1]))
+                    next.direction = n[2]
+                    self.__break_wall(current,next)
+
+
+        pygame.display.set_caption('Wilsons Walk - Carving')
+
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+            self.__display_grid()
             pygame.display.flip()
-            if clock_tick != None:
-                clock.tick(clock_tick)
-
-        pygame.time.delay(20000)
+            clock.tick(30)
         pygame.quit()
 
 
     # redraw all cells
-    def display_grid(self):
+    def __display_grid(self):
         for row in self.grid:
             for cell in row:
                 cell.draw()
@@ -155,12 +184,14 @@ class maze():
 
     # set wall to False for this cell and next cell according to exit direction
     def __break_wall(self, current, next):
+        if current == next:
+            return
         d = current.direction
         rd = self.w.reverse_direction[d]
         current.walls[d] = False
         next.walls[rd] = False
 
-    # get cell by coordinates
+    # get drawing cell by coordinates
     def __get_grid_cell(self, coord):
         y,x = coord
         return self.grid[y][x]
@@ -173,6 +204,3 @@ class maze():
             for c in r:
                 flat.append(c)
         return flat
-
-
-
