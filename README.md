@@ -24,19 +24,34 @@ After finish (or unvisited cell) is reached we go back to the start cell and use
 All the paths are stored as lists of coordinates and directions, so 'carving' boils down to iterating through each list, obtaining exit direction and coordinates of a grid cell and removing the cell 'wall' towards which the direction is pointing.
 <br/><br/><br/>
 
-Scouting (takes a while):
-<br/><br/>
+<details>
+  <summary>Animated Scouting</summary>
+  
+  <br/>
+  
 ![scouting](https://user-images.githubusercontent.com/130370305/236021930-48fe284e-814b-4ba4-b914-249904847227.gif)
 
+</details>
+
 <br/><br/>
 
-Carving:
-<br/><br/>
+<details>
+  <summary>Animated Carving</summary>
+  
+  <br/>
+  
 ![carving](https://user-images.githubusercontent.com/130370305/236021738-1405fc98-4917-45cb-b26a-295c221df7c4.gif)
 
-<br/><br/><br/>
+</details>
 
-Result:
+<br/><br/>
+
+<details>
+  <summary>Results</summary>
+  
+  <br/>
+  
+6x6 maze:
 <br/><br/>
 ![00045_carving](https://user-images.githubusercontent.com/130370305/236026226-af8142e2-6103-437a-b729-acbb16f21bca.png)
 
@@ -44,6 +59,8 @@ Result:
 120x120 maze:
 <br/><br/>
 ![maze](https://user-images.githubusercontent.com/130370305/236067860-7ef52ed1-b6b2-4e8d-abb5-3706c31c963b.png)
+ 
+ </details>
 
 
 
