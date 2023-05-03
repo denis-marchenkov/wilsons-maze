@@ -1,7 +1,12 @@
 # Wilson's Maze Generator
+<br/>
 
+![mini_maze](https://user-images.githubusercontent.com/130370305/236062401-d68d7c2c-4d3b-469b-8184-c0456fdb7197.gif)
+  
+<br/>
 Generate a random maze using Wilson's algorythm. 
 
+<br/><br/>
 
 **This was implemented purely as Python a learning experience.**
 
