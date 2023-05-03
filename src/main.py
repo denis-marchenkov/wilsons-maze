@@ -5,10 +5,13 @@ from draw_wilson import maze
 import random
 # endregion
 
-rows = cols = 6
-cell_size = 50
+# 1809627, 6
+# 3809627, 6
 
-w = wilsons(randomizer = random, seed = 21327140567, rows = rows, columns = cols)
+rows = cols = 7
+cell_size = 70
+
+w = wilsons(randomizer = random, seed = 53801279, rows = rows, columns = cols)
 
 #w.traverse_grid()
 w.traverse_grid((0,0),(w.rows - 1, w.columns - 1))
@@ -18,7 +21,8 @@ w.traverse_grid((0,0),(w.rows - 1, w.columns - 1))
 # mv.dump_paths(top=1, type=0)
 # mv.dump_paths(top=1, type=1)
 
-m = maze(w, cell_size = cell_size)
-#m.carve(clock_tick=30)
-#m.instant_carve()
-m.scout(clock_tick=10)
+m = maze(w, cell_size)
+
+#m.carve(clock_tick=3, save_frames=True)
+m.instant_carve()
+#m.scout(clock_tick=10, save_frames=False)

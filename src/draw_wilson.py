@@ -1,5 +1,9 @@
 #region imports
 import pygame
+import os
+from datetime import datetime
+import glob
+from PIL import Image
 #endregion
 
 clock = pygame.time.Clock()
@@ -98,6 +102,7 @@ class maze():
         self.grid = [[cell(col, row, None, self.cell_size) for col in range(self.w.columns)] for row in range(self.w.rows)]
 
         self.display_size = [self.w.rows*self.cell_size + 2, self.w.columns*self.cell_size + 2]
+
         global screen
         screen = pygame.display.set_mode(self.display_size)
 
@@ -114,9 +119,12 @@ class maze():
 
 
     # visualize carving paths
-    def carve(self, clock_tick = 30):
+    def carve(self, clock_tick = 30, save_frames = False):
+        name = 'carving'
 
-        pygame.display.set_caption('Wilsons Walk - Carving')
+        folder = self.__get_work_folder(name) if save_frames else None
+
+        pygame.display.set_caption(f'Wilsons Walk - {name}')
 
         running = True
         carved = False
@@ -130,9 +138,9 @@ class maze():
                     running = False
             self.__display_grid()
 
+            image_num = 0
             if not carved:
                 for p in self.w.paths_to_carve:
-                    
                     for i, c in enumerate(p):
                         self.__display_grid()
 
@@ -155,9 +163,17 @@ class maze():
                         self.__break_wall(current,next)
 
                         pygame.display.flip()
+                        
                         if clock_tick != None:
+                            if save_frames:
+                                image_path = f'{folder}{str(image_num).zfill(5)}_{name}.png'
+                                pygame.image.save(screen, image_path)
+                                image_num+=1
                             clock.tick(clock_tick)
                 carved = True
+
+        if save_frames:
+            self.__save_gif(folder, name, 300)
         pygame.quit()
 
 
@@ -194,9 +210,13 @@ class maze():
 
 
     # visualize scouting process
-    def scout(self, clock_tick = 5):
+    def scout(self, clock_tick = 5, save_frames = False):
 
-        pygame.display.set_caption('Wilsons Walk - Scouting')
+        name = "scouting"
+
+        pygame.display.set_caption(f'Wilsons Walk - {name}')
+
+        folder = self.__get_work_folder(name) if save_frames else None
 
         running = True
         scouted = False
@@ -210,6 +230,7 @@ class maze():
                     running = False
             self.__display_grid()
 
+            image_num = 0
             if not scouted:
                 for i, p in enumerate(self.w.all_paths):
                     start = self.__get_grid_cell(p[0])
@@ -237,6 +258,10 @@ class maze():
 
                         pygame.display.flip()
                         if clock_tick != None:
+                            if save_frames:
+                                image_path = f'{folder}{str(image_num).zfill(5)}_{name}.png'
+                                pygame.image.save(screen, image_path)
+                                image_num+=1
                             clock.tick(clock_tick)
 
                     self.__reset_scouted_cells(i)
@@ -245,8 +270,12 @@ class maze():
                     self.__display_grid()
                     pygame.display.flip()
 
-                    pygame.time.delay(5000)
+                    pygame.time.delay(1500)
                 scouted = True
+
+        if save_frames:
+            self.__save_gif(folder, name)
+
         pygame.quit()
 
 
@@ -283,7 +312,7 @@ class maze():
 
     # revert scouted cells which are not a part of carved path
     def __reset_scouted_cells(self, path_id):
-        carved_coords = [(c[1],c[0]) for c in self.w.paths_to_carve[path_id]]
+        carved_coords = {(c[1],c[0]):c[2] for c in self.w.paths_to_carve[path_id]}
         for row in self.grid:
             for cell in row:
                 cell.visited = False
@@ -292,3 +321,21 @@ class maze():
                 else:
                     cell.color_direction = colors.red
                     cell.carved = True
+                    cell.direction = carved_coords[(cell.x, cell.y)]
+
+
+    # region GIF
+    def __get_work_folder(self, name):
+        cwd = os.getcwd()
+        now = datetime.now().strftime("%d_%m_%Y_%H_%M")
+        wf = f'{cwd}\\frames\\{name}_{now}\\'
+        if not os.path.exists(wf):
+            os.makedirs(wf)
+        return wf
+    
+    def __save_gif(self, folder, name, dur=400, lp = 0):
+        frames = [Image.open(image) for image in glob.glob(f"{folder}/*.png")]
+        frame_one = frames[0]
+        frame_one.save(f"{folder}{name}.gif", format="GIF", append_images=frames, save_all=True, duration=dur, loop=lp)
+
+    # endregion
