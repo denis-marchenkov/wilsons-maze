@@ -3,7 +3,7 @@
 Generate a random maze using Wilson's algorythm. 
 
 
-**This was implemented purely as a learning experience.**
+**This was implemented purely as Python a learning experience.**
 
 
 ## Description:
