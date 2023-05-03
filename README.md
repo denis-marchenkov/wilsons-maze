@@ -15,7 +15,7 @@ Generate a random maze using Wilson's algorythm.
 
 Naive implementation of wilsons maze generation algorithm.
 
-We pick start and finish cells at random and begin scouting randomly: pick random direction, move to that cell and repeat until we reach the finish cell or any already visited cell.
+We pick start and finish cells at random and begin scouting: pick random direction, move to that cell and repeat until we reach the finish cell or any already visited cell.
 
 During the scouting we record in which direction we exit each cell. If we walk through the same cell again and exit in a different direction - we override stored direction for that cell.
 
