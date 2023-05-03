@@ -2,8 +2,6 @@
 import pygame
 import os
 from datetime import datetime
-import glob
-from PIL import Image
 #endregion
 
 clock = pygame.time.Clock()
@@ -172,8 +170,6 @@ class maze():
                             clock.tick(clock_tick)
                 carved = True
 
-        if save_frames:
-            self.__save_gif(folder, name, 300)
         pygame.quit()
 
 
@@ -273,9 +269,6 @@ class maze():
                     pygame.time.delay(1500)
                 scouted = True
 
-        if save_frames:
-            self.__save_gif(folder, name)
-
         pygame.quit()
 
 
@@ -324,7 +317,7 @@ class maze():
                     cell.direction = carved_coords[(cell.x, cell.y)]
 
 
-    # region GIF
+    # get folder to save frames in
     def __get_work_folder(self, name):
         cwd = os.getcwd()
         now = datetime.now().strftime("%d_%m_%Y_%H_%M")
@@ -332,10 +325,3 @@ class maze():
         if not os.path.exists(wf):
             os.makedirs(wf)
         return wf
-    
-    def __save_gif(self, folder, name, dur=400, lp = 0):
-        frames = [Image.open(image) for image in glob.glob(f"{folder}/*.png")]
-        frame_one = frames[0]
-        frame_one.save(f"{folder}{name}.gif", format="GIF", append_images=frames, save_all=True, duration=dur, loop=lp)
-
-    # endregion
