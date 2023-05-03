@@ -41,4 +41,9 @@ Result:
 ![00045_carving](https://user-images.githubusercontent.com/130370305/236026226-af8142e2-6103-437a-b729-acbb16f21bca.png)
 
 
+120x120 maze:
+<br/><br/>
+![maze](https://user-images.githubusercontent.com/130370305/236067860-7ef52ed1-b6b2-4e8d-abb5-3706c31c963b.png)
+
+
 
