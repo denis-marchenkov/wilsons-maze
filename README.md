@@ -17,11 +17,11 @@ Naive implementation of wilsons maze generation algorithm.
 
 We pick start and finish cells at random and begin scouting: pick random direction, move to that cell and repeat until we reach the finish cell or any already visited cell.
 
-During the scouting we record in which direction we exit each cell. If we walk through the same cell again and exit in a different direction - we override stored direction for that cell.
+While scouting we record in which direction we exit each cell. If we walk through the same cell again and exit in a different direction - we override stored direction for that cell.
 
-After finish is reached we go back to the start cell and use the recorded directions to build a path from start to finish.
+After finish (or unvisited cell) is reached we go back to the start cell and use the recorded directions to build a path from start to finish. All other scouted cells which are not on the path will be scouted again on next iteration.
 
-All the paths stored are as lists of coordinates and directions, so 'carving' boils down to iterating through each list, obtaining exit direction and grid cell coordinates from each list item and removing one of the cell 'walls' towards which direction is pointing.
+All the paths are stored as lists of coordinates and directions, so 'carving' boils down to iterating through each list, obtaining exit direction and coordinates of a grid cell and removing the cell 'wall' towards which the direction is pointing.
 <br/><br/><br/>
 
 Scouting (takes a while):
