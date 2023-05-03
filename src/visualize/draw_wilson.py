@@ -174,7 +174,14 @@ class maze():
 
 
     # draw the entire carved maze at once
-    def instant_carve(self):
+    def instant_carve(self, save_frames = False):
+        
+        name = 'maze'
+
+        folder = self.__get_work_folder(name) if save_frames else None
+
+        pygame.display.set_caption(f'Wilsons Walk - {name}')
+
         for p in self.w.paths_to_carve:
                 for i, c in enumerate(p):
                     current = self.__get_grid_cell(c)
@@ -191,9 +198,6 @@ class maze():
                     next.direction = n[2]
                     self.__break_wall(current,next)
 
-
-        pygame.display.set_caption('Wilsons Walk - Carving')
-
         running = True
         while running:
             for event in pygame.event.get():
@@ -202,6 +206,11 @@ class maze():
             self.__display_grid()
             pygame.display.flip()
             clock.tick(30)
+
+        if save_frames:
+            image_path = f'{folder}{name}.png'
+            pygame.image.save(screen, image_path)
+
         pygame.quit()
 
 
