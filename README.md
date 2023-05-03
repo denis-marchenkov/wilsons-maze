@@ -44,12 +44,7 @@ All the paths are stored as lists of coordinates and directions, so 'carving' bo
 
 </details>
 
-<br/><br/>
-
-<details>
-  <summary>Results</summary>
-  
-  <br/>
+<br/><br/><br/>
   
 6x6 maze:
 <br/><br/>
@@ -60,7 +55,6 @@ All the paths are stored as lists of coordinates and directions, so 'carving' bo
 <br/><br/>
 ![maze](https://user-images.githubusercontent.com/130370305/236067860-7ef52ed1-b6b2-4e8d-abb5-3706c31c963b.png)
  
- </details>
-
+ 
 
 
