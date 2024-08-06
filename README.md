@@ -19,30 +19,30 @@ We pick start and finish cells at random and begin scouting: pick random directi
 
 While scouting we record in which direction we exit each cell. If we walk through the same cell again and exit in a different direction - we override stored direction for that cell.
 
-After finish (or unvisited cell) is reached we go back to the start cell and use the recorded directions to build a path from start to finish. All other scouted cells which are not on the path will be scouted again on next iteration.
+After finish (or visited cell) is reached we go back to the start cell and use the recorded directions to build a path from start to finish. All other scouted cells which are not on the path will be scouted again on next iteration.
 
 All the paths are stored as lists of coordinates and directions, so 'carving' boils down to iterating through each list, obtaining exit direction and coordinates of a grid cell and removing the cell 'wall' towards which the direction is pointing.
 <br/><br/><br/>
 
-<details>
-  <summary>Animated Scouting</summary>
+
+Animated Scouting:
   
   <br/>
   
 ![scouting](https://user-images.githubusercontent.com/130370305/236021930-48fe284e-814b-4ba4-b914-249904847227.gif)
 
-</details>
+
 
 <br/><br/>
 
-<details>
-  <summary>Animated Carving</summary>
+
+ Animated Carving:
   
   <br/>
   
 ![carving](https://user-images.githubusercontent.com/130370305/236021738-1405fc98-4917-45cb-b26a-295c221df7c4.gif)
 
-</details>
+
 
 <br/><br/><br/>
   
